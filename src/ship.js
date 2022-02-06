@@ -1,5 +1,6 @@
-function buildShip(length) {
+function buildShip(name, length) {
 	return {
+		name: name,
 		stretch: length,
 		arr: new Array(length).fill('O'),
 		getShipLength() {
