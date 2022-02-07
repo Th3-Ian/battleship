@@ -33,3 +33,9 @@ test('Expect sunk to return true when all arr elements are X', () => {
 	console.log(ship);
 	expect(ship.sunk()).toBe(true);
 })
+
+test('Expect ship to toggle horizontal to false', () => {
+	let ship = buildShip(4);
+	ship.toggleDirection();
+	expect(ship.horizontal).toBeFalsy();
+})

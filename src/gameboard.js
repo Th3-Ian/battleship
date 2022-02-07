@@ -14,10 +14,6 @@ function buildBoard() {
 	}
 }
 
-let board = buildBoard();
-board.displayBoard();
-console.log(board.squareArr.length);
-
 module.exports = {
 	buildBoard
 }
