@@ -38,7 +38,7 @@ function buildShip(name, length) {
     },
     toggleDirection() {
       this.horizontal = this.horizontal ? false : true;
-      console.log(this.horizontal);
+      //console.log(this.horizontal);
     }
   };
 }
