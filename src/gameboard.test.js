@@ -271,7 +271,7 @@ describe('Placing ships', () => {
     );
   });
 
-  test.only('Expect error to throw when placing over another ship horizontally', () => {
+  test('Expect error to throw when placing over another ship horizontally', () => {
     let ship1 = shipModule.buildShip('rowboat', 2);
     let ship2 = shipModule.buildShip('cruiser', 6);
     buildBoard.displayBoard();
@@ -279,5 +279,20 @@ describe('Placing ships', () => {
     expect(buildBoard.placeShip(ship2, 'd1')).toEqual(
       'Error: another ship is at this location'
     );
+  });
+
+  test('Expect board coordinates to be pushed to ship horizontally', () => {
+    let ship = shipModule.buildShip('tugboat', 3);
+    buildBoard.displayBoard();
+    buildBoard.placeShip(ship, 'f5');
+    expect(ship.coordinates).toEqual(['f5', 'f6', 'f7']);
+  });
+
+  test.only('Expect board coordinates to be pushed to ship horizontally', () => {
+    let ship = shipModule.buildShip('fishing', 4);
+    ship.toggleDirection();
+    buildBoard.displayBoard();
+    buildBoard.placeShip(ship, 'c4');
+    expect(ship.coordinates).toEqual(['c4', 'd4', 'e4', 'f4']);
   });
 });

@@ -6,6 +6,7 @@ function buildShip(name, length) {
     arr: new Array(length).fill('O'),
     horizontal: true,
     sunk: false,
+    coordinates: [],
     getShipLength() {
       return `This ship is ${this.length}`;
     },
