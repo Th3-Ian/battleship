@@ -250,4 +250,34 @@ describe('Placing ships', () => {
       'Cannot place, ship is out of bounds'
     );
   });
+
+  test('Expect out of bounds to throw error vertically', () => {
+    let ship = shipModule.buildShip('cruiser', 6);
+    buildBoard.displayBoard();
+    ship.toggleDirection();
+    expect(buildBoard.placeShip(ship, 'h2')).toEqual(
+      'Cannot place, ship is out of bounds'
+    );
+  });
+
+  test('Expect error to throw when placing over another ship vertically', () => {
+    let ship1 = shipModule.buildShip('rowboat', 2);
+    let ship2 = shipModule.buildShip('cruiser', 6);
+    ship2.toggleDirection();
+    buildBoard.displayBoard();
+    buildBoard.placeShip(ship1, 'd3');
+    expect(buildBoard.placeShip(ship2, 'b3')).toEqual(
+      'Error: another ship is at this location'
+    );
+  });
+
+  test.only('Expect error to throw when placing over another ship horizontally', () => {
+    let ship1 = shipModule.buildShip('rowboat', 2);
+    let ship2 = shipModule.buildShip('cruiser', 6);
+    buildBoard.displayBoard();
+    buildBoard.placeShip(ship1, 'd3');
+    expect(buildBoard.placeShip(ship2, 'd1')).toEqual(
+      'Error: another ship is at this location'
+    );
+  });
 });
