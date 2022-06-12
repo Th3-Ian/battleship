@@ -76,28 +76,35 @@ function buildBoard(name) {
       }
     },
     recieveAttack(coord) {
-      //let coord = coord - 1;
+      coord = coord - 1;
       const placed = this.placedShips;
-      if (this.squareArr[coord] === 'O') {
-        console.log('HIT!');
-        this.hitNum++;
+      try {
+        if (this.squareArr[coord] === 'O') {
+          console.log('HIT!');
+          this.hitNum++;
 
-        for (let i = 0; i < placed.length; i++) {
-          for (let j = 0; j < placed[i].coordinates.length; j++) {
-            if (placed[j].coordinates[j] === coord) {
-              placed[i].hit(j);
-              placed[i].isSunk();
+          for (let i = 0; i < placed.length; i++) {
+            for (let j = 0; j < placed[i].coordinates.length; j++) {
+              if (placed[j].coordinates[j] === coord) {
+                placed[i].hit(j);
+                placed[i].isSunk();
+              }
             }
           }
+          // call loop func that loops ships.coord on the board with the shipname === board.name
+          // then grabs the index that matches the ship.coord and splices it in ship.arr
+          this.squareArr.splice(coord, 1, 'X');
+        } else if (this.squareArr[coord] === 'X') {
+          throw new Error('Error: Already attacked this location');
+        } else {
+          console.log('MISS!');
+          this.missedArr.push(coord);
+          console.log(`This is the board missedArr ${this.missedArr}`);
+          this.squareArr.splice(coord, 1, 'X');
         }
-        // call loop func that loops ships.coord on the board with the shipname === board.name
-        // then grabs the index that matches the ship.coord and splices it in ship.arr
-        this.squareArr.splice(coord, 1, 'X');
-      } else {
-        console.log('MISS!');
-        this.missedArr.push(coord);
-        console.log(`This is the board missedArr ${this.missedArr}`);
-        this.squareArr.splice(coord, 1, 'X');
+      } catch (e) {
+        console.log(e);
+        return e.message;
       }
     }
   };

@@ -306,13 +306,18 @@ describe('taking hits', () => {
   test('Expect recieveHit to update ship.arr', () => {
     let ship = shipModule.buildShip('fishing', 4);
     buildBoard.placeShip(ship, 'c4');
-    buildBoard.recieveAttack(25);
+    buildBoard.recieveAttack(26);
     expect(ship.arr).toEqual(['O', 'X', 'O', 'O']);
   });
 
-  test('Expect error to be thrown when selecting spot already hit', () => {});
+  test('Expect error to be thrown when selecting spot already hit', () => {
+    buildBoard.recieveAttack(12);
+    expect(buildBoard.recieveAttack(12)).toEqual(
+      'Error: Already attacked this location'
+    );
+  });
 
-  test.only('Expect board to be updated with X', () => {
+  test('Expect board to be updated with X', () => {
     let ship = shipModule.buildShip('fishing', 4);
     buildBoard.placeShip(ship, 'b2');
     buildBoard.recieveAttack(12);
