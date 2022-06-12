@@ -24,7 +24,8 @@ function buildShip(name, length) {
     hit(n) {
       let num = n - 1;
       if (num < this.arr.length) {
-        this.arr[num] = 'X';
+        this.arr.splice(num, 1, 'X');
+        console.log(this.arr);
         return this.arr;
       } else {
         throw Error('Hit misses');
@@ -32,6 +33,7 @@ function buildShip(name, length) {
     },
     isSunk() {
       if (!this.arr.includes('O')) {
+        console.log(`${this.name} has been sunk!`);
         return (this.sunk = true);
       } else {
         return (this.sunk = false);
