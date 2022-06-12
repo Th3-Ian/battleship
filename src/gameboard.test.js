@@ -261,12 +261,12 @@ describe('Placing ships', () => {
   });
 
   test('Expect error to throw when placing over another ship vertically', () => {
-    let ship1 = shipModule.buildShip('rowboat', 2);
+    let ship1 = shipModule.buildShip('fishing boat', 3);
     let ship2 = shipModule.buildShip('cruiser', 6);
     ship2.toggleDirection();
     buildBoard.displayBoard();
     buildBoard.placeShip(ship1, 'd3');
-    expect(buildBoard.placeShip(ship2, 'b3')).toEqual(
+    expect(buildBoard.placeShip(ship2, 'c3')).toEqual(
       'Error: another ship is at this location'
     );
   });
@@ -285,14 +285,14 @@ describe('Placing ships', () => {
     let ship = shipModule.buildShip('tugboat', 3);
     buildBoard.displayBoard();
     buildBoard.placeShip(ship, 'f5');
-    expect(ship.coordinates).toEqual(['f5', 'f6', 'f7']);
+    expect(ship.coordinates).toEqual([54, 55, 56]);
   });
 
-  test.only('Expect board coordinates to be pushed to ship horizontally', () => {
+  test('Expect board coordinates to be pushed to ship horizontally', () => {
     let ship = shipModule.buildShip('fishing', 4);
     ship.toggleDirection();
     buildBoard.displayBoard();
     buildBoard.placeShip(ship, 'c4');
-    expect(ship.coordinates).toEqual(['c4', 'd4', 'e4', 'f4']);
+    expect(ship.coordinates).toEqual([23, 33, 43, 53]);
   });
 });

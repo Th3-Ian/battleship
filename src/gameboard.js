@@ -38,7 +38,8 @@ function buildBoard() {
             } else if (this.squareArr[placement + i] === 'O') {
               throw new Error('Error: another ship is at this location');
             }
-            ship.coordinates.push(this.squareArr[placement + i]);
+            //ship.coordinates.push(this.squareArr[placement + i]);
+            ship.coordinates.push(placement + i);
             this.squareArr.splice(placement + i, 1, 'O');
           }
         } catch (e) {
@@ -47,26 +48,26 @@ function buildBoard() {
           // func to alert screen of error
           // func to place ship again in diff location
         }
-        console.log(ship.coordinates);
       } else {
         try {
           let end = this.squareArr[placement + ship.length * 10];
           for (i = 0; i < ship.length; i++) {
             if (end === undefined) {
               throw new Error('Cannot place, ship is out of bounds');
-            } else if (this.squareArr[placement + i] === 'O') {
+            } else if (this.squareArr[placement + i * 10] === 'O') {
               throw new Error('Error: another ship is at this location');
             }
-            ship.coordinates.push(this.squareArr[placement + i * 10]);
+            //ship.coordinates.push(this.squareArr[placement + i * 10]);
+            ship.coordinates.push(placement + i * 10);
             this.squareArr.splice(placement + i * 10, 1, 'O');
           }
         } catch (e) {
+          console.log('this error msg is working');
           console.error(e);
           return e.message;
           // func to alert screen of error
           // func to place ship again in diff location
         }
-        console.log(ship.coordinates);
       }
     }
   };
