@@ -106,6 +106,17 @@ function buildBoard(name) {
         console.log(e);
         return e.message;
       }
+    },
+    gameLoss() {
+      const placed = this.placedShips;
+      for (let i = 0; i < placed.length; i++) {
+        if (placed[i].sunk === false) {
+          break;
+        } else {
+          console.log('Game over');
+          return 'Game Over';
+        }
+      }
     }
   };
 }
@@ -113,14 +124,3 @@ function buildBoard(name) {
 module.exports = {
   buildBoard
 };
-
-/*
-if placement.charAt(0) != board.squareArr(placement + ship.length).charAt(0) throw error
-
-if board.squareArr[placement + ship.length] === undefined throw error
-
-console.log(
-        `This is the placement ${placement} starting place: ${start} and this is the end ${end} and this is the board ${this.squareArr}`
-      );
-
-*/
