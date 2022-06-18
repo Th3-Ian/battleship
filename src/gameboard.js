@@ -1,11 +1,10 @@
-function buildBoard(name) {
+function buildBoard() {
   return {
     columns: 10,
     rows: 10,
     squareArr: [],
     missedArr: [],
     placedShips: [],
-    name: name,
     hitNum: 0,
     displayBoard() {
       for (let i = 0; i < this.columns * this.rows; i++) {
@@ -117,6 +116,10 @@ function buildBoard(name) {
           return 'Game Over';
         }
       }
+    },
+    randPlace() {
+      //for loop of the ships array that grabs a random number 0-99 and places the ships incrementally on the board
+      //Also should randomly toggle ship.horizontal
     }
   };
 }

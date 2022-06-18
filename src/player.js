@@ -1,10 +1,10 @@
-function Player(name, gameBoard) {
+function Player(name, gameBoard, ships) {
   return {
     name: name,
     active: false,
     attacks: [],
     gameBoard: gameBoard,
-    ships: [],
+    ships: ships,
     updateTurn() {
       this.active = this.active ? false : true;
     },

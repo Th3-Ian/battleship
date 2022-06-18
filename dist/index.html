@@ -1,1 +1,32 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>BattleShip</title><script defer="defer" src="main.js"></script></head><body></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>BattleShip</title>
+    <script defer="defer" src="main.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Battleship</h1>
+      <label for="pname">Player name:</label>
+      <input type="text" id="pname" name="pname" />
+    </header>
+    <div class="main-body">
+      <section class="player-holder">
+        <div class="player-board"></div>
+      </section>
+      <section class="computer-holder">
+        <div class="computer-board"></div>
+      </section>
+      <div class="player-fleet">
+        <div class="boats"></div>
+        <div class="game-controls">
+          <button id="shuffle">Shuffle</button>
+          <button id="start">Start</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
