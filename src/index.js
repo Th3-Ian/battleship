@@ -18,7 +18,8 @@ function startGame() {
   //may need to make two fleets and gameboards if both players share the same one
   const player1 = new playerModule.Player(playerName, gameBoard, fleet);
   const computer = new playerModule.Player('Computer', gameBoard, fleet);
-  setBoard();
+  setBoard(player1);
+  setBoard(computer);
 }
 
 function gameLoop(player) {
@@ -41,6 +42,24 @@ function buildFleet() {
   return fleet;
 }
 
-function setBoard() {
+function setBoard(user) {
+  const playerBoard = document.querySelector('#playerBoard');
+  const compBoard = document.querySelector('#compBody');
+  const td = document.createElement('td');
   // places ships onto board via drag and drop for player1
+  if (user.name === 'Computer') {
+    for (i = 0; i < user.gameBoard.squareArr.length; i++) {
+      let num = Math.floor(i / 10);
+      let row = document.querySelector(compBoard`:nthchild(${num + 1})`);
+      td.textContent = user.gameBoard.squareArr[i];
+      row.appendChild(td);
+    }
+  } else {
+    for (i = 0; i < user.gameBoard.squareArr.length; i++) {
+      let num = Math.floor(i / 10);
+      let row = document.querySelector(playerBoard`:nthchild(${num + 1})`);
+      td.textContent = user.gameBoard.squareArr[i];
+      row.appendChild(td);
+    }
+  }
 }
