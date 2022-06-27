@@ -13,6 +13,7 @@ const config = {
   output: {
     path: path.resolve(__dirname, 'dist')
   },
+  devtool: 'source-map',
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',

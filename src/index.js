@@ -9,17 +9,31 @@ const shipTypesArr = [
   ['Cruiser', 3],
   ['Destroyer', 2]
 ];
-let playersStart = [getName(), 'Computer'];
+let playersStart = ['Ian', 'Computer'];
 
 function startGame() {
-  let playerName = getName();
+  console.log('start game one time');
+  const player = buildPlayer(playersStart[0]);
+  const computer = buildComputer(playersStart[1]);
+
+  setBoard(computer);
+}
+
+function buildPlayer(name) {
   let fleet = buildFleet();
   let gameBoard = boardModule.buildBoard();
-  //may need to make two fleets and gameboards if both players share the same one
-  const player1 = new playerModule.Player(playerName, gameBoard, fleet);
-  const computer = new playerModule.Player('Computer', gameBoard, fleet);
-  setBoard(player1);
-  setBoard(computer);
+  const player = new playerModule.Player(name, gameBoard, fleet);
+  player.gameBoard.displayBoard();
+  return player;
+}
+
+function buildComputer(name) {
+  console.log('build pc one time');
+  let fleet = buildFleet();
+  let gameBoard = boardModule.buildBoard();
+  const computer = new playerModule.Player(name, gameBoard, fleet);
+  computer.gameBoard.displayBoard();
+  return computer;
 }
 
 function gameLoop(player) {
@@ -35,7 +49,7 @@ function getName() {
 
 function buildFleet() {
   let fleet = [];
-  for (i = 0; i < shipTypesArr.length; i++) {
+  for (let i = 0; i < shipTypesArr.length; i++) {
     let ship = shipModule.buildShip(shipTypesArr[i][0], shipTypesArr[i][1]);
     fleet.push(ship);
   }
@@ -45,21 +59,32 @@ function buildFleet() {
 function setBoard(user) {
   const playerBoard = document.querySelector('#playerBoard');
   const compBoard = document.querySelector('#compBody');
-  const td = document.createElement('td');
+
+  console.log('this is the gameboard length' + user.gameBoard.squareArr.length);
   // places ships onto board via drag and drop for player1
   if (user.name === 'Computer') {
-    for (i = 0; i < user.gameBoard.squareArr.length; i++) {
-      let num = Math.floor(i / 10);
-      let row = document.querySelector(compBoard`:nthchild(${num + 1})`);
+    for (let i = 0; i < user.gameBoard.squareArr.length; i++) {
+      let td = document.createElement('td');
+      let num = Math.floor(i / 10) + 1;
+      let row = document.querySelector(`#compRow${num}`);
+      //console.log(row);
+      //console.log('compRow' + num);
       td.textContent = user.gameBoard.squareArr[i];
       row.appendChild(td);
     }
-  } else {
-    for (i = 0; i < user.gameBoard.squareArr.length; i++) {
-      let num = Math.floor(i / 10);
-      let row = document.querySelector(playerBoard`:nthchild(${num + 1})`);
+    return;
+  } else if (user.name === 'Ian') {
+    for (let i = 0; i < user.gameBoard.squareArr.length; i++) {
+      let td = document.createElement('td');
+      let num = Math.floor(i / 10) + 1;
+      let row = document.querySelector(`#playerRow${num}`);
       td.textContent = user.gameBoard.squareArr[i];
       row.appendChild(td);
     }
   }
 }
+
+startGame();
+
+// PROBLEM query selector for gameboard rows starts selecting table data instead of next row
+// Potential fix is add ids to all rows and increasing the row selected by using `row${num + 1}`
