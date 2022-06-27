@@ -7,6 +7,7 @@ const shipTypesArr = [
   ['Carrier', 5],
   ['Battleship', 4],
   ['Cruiser', 3],
+  ['Submarine', 3],
   ['Destroyer', 2]
 ];
 let playersStart = ['Ian', 'Computer'];
@@ -17,6 +18,7 @@ function startGame() {
   const computer = buildComputer(playersStart[1]);
 
   setBoard(player);
+  displayFleet(player);
   setBoard(computer);
 }
 
@@ -82,6 +84,15 @@ function setBoard(user) {
       td.textContent = user.gameBoard.squareArr[i];
       row.appendChild(td);
     }
+  }
+}
+
+function displayFleet(user) {
+  const fleetContainer = document.querySelector('.boats');
+  for (let i = 0; i < user.ships.length; i++) {
+    let div = document.createElement('div');
+    div.textContent = user.ships[i].name + ' ' + user.ships[i].length;
+    fleetContainer.appendChild(div);
   }
 }
 
