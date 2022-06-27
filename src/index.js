@@ -16,6 +16,7 @@ function startGame() {
   const player = buildPlayer(playersStart[0]);
   const computer = buildComputer(playersStart[1]);
 
+  setBoard(player);
   setBoard(computer);
 }
 
