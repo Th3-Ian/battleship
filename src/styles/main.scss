@@ -70,3 +70,14 @@ th {
 	margin: auto;
 	padding: 16px;
 }
+
+.ship {
+	border: 3px solid purple;
+	background-color: red;
+	width: 3rem;
+	height: 2.5rem;
+}
+
+.ship-container {
+	display: flex;
+}

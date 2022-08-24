@@ -89,11 +89,24 @@ function setBoard(user) {
 
 function displayFleet(user) {
   const fleetContainer = document.querySelector('.boats');
+
   for (let i = 0; i < user.ships.length; i++) {
     let div = document.createElement('div');
     div.textContent = user.ships[i].name + ' ' + user.ships[i].length;
     fleetContainer.appendChild(div);
+    shipDivs(user.ships[i], fleetContainer);
   }
+}
+
+function shipDivs(ship, container) {
+  const div = document.createElement('div');
+  div.className = 'ship-container';
+  for (let i = 0; i < ship.length; i++) {
+    const shipPart = document.createElement('div');
+    shipPart.className = 'ship';
+    div.appendChild(shipPart);
+  }
+  container.appendChild(div);
 }
 
 startGame();

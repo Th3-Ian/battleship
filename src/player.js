@@ -8,13 +8,17 @@ function Player(name, gameBoard, ships) {
     updateTurn() {
       this.active = this.active ? false : true;
     },
-    randomAttack() {
+    randomNum() {
       let num = Math.floor(Math.random() * 100);
       if (this.attacks.includes(num) === false) {
         return num;
       } else {
-        this.randomAttack();
+        this.randomNum();
       }
+    },
+    randomBool() {
+      var random_boolean = Math.random() < 0.5;
+      return random_booleanl;
     }
   };
 }
