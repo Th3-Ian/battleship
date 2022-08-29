@@ -10,6 +10,7 @@ const shipTypesArr = [
   ['Submarine', 3],
   ['Destroyer', 2]
 ];
+const startBtn = document.getElementById('start');
 let playersStart = ['Ian', 'Computer'];
 
 function startGame() {
@@ -94,13 +95,14 @@ function displayFleet(user) {
     let div = document.createElement('div');
     div.textContent = user.ships[i].name + ' ' + user.ships[i].length;
     fleetContainer.appendChild(div);
-    shipDivs(user.ships[i], fleetContainer);
+    shipDivs(user.ships[i], fleetContainer, user);
   }
 }
 
-function shipDivs(ship, container) {
+function shipDivs(ship, container, user) {
   const div = document.createElement('div');
   div.className = 'ship-container';
+  div.classList.add(user.ships.name);
   for (let i = 0; i < ship.length; i++) {
     const shipPart = document.createElement('div');
     shipPart.className = 'ship';
@@ -109,7 +111,34 @@ function shipDivs(ship, container) {
   container.appendChild(div);
 }
 
-startGame();
+document.getElementById('start').addEventListener('click', () => {
+  startGame();
+});
+//startGame();
 
-// PROBLEM query selector for gameboard rows starts selecting table data instead of next row
-// Potential fix is add ids to all rows and increasing the row selected by using `row${num + 1}`
+/*
+*** placing use ship todo
+ 1 - add button for each shipDiv to transition ship.horizontal true : false
+ 2 - dom listener to drag ship to board location. Then grabs location and ship to call gameboard place ship
+   ^^ dom listener should change each location classname to include the '.ship' class
+   ^^ other func called from dom listener should change .ship-container display: hidden
+Need to figure out how to connect user.ship to carrier div for gameboard.placeShip()
+		^^ Try using the player const inside of start game
+
+
+*** attacking
+ 1 - dom listener put in gameloop func to call gameboard.receiveAttack()
+		^^ create two new css classes for hit and miss for the board divs
+
+*** Complete gameboard.randPlace() to shuffle computer placements
+	Connect to shuffle button at bottom of board for player shuffle placements
+
+*** Start game button
+	Connect startGame func with start button on bottom of board
+
+*** Create modal to display thrown errors
+
+*** Create modal for game over with reset btn and play again btn
+
+*** Change .boats container to display boats horizontally instead of vertically
+*/
