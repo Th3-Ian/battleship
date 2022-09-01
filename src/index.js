@@ -10,7 +10,7 @@ const shipTypesArr = [
   ['Submarine', 3],
   ['Destroyer', 2]
 ];
-const startBtn = document.getElementById('start');
+
 let playersStart = ['Ian', 'Computer'];
 
 function startGame() {
@@ -90,25 +90,28 @@ function setBoard(user) {
 
 function displayFleet(user) {
   const fleetContainer = document.querySelector('.boats');
-
   for (let i = 0; i < user.ships.length; i++) {
-    let div = document.createElement('div');
-    div.textContent = user.ships[i].name + ' ' + user.ships[i].length;
-    fleetContainer.appendChild(div);
-    shipDivs(user.ships[i], fleetContainer, user);
+    let shipName = document.createElement('div');
+    shipName.textContent = user.ships[i].name + ' ' + user.ships[i].length;
+
+    shipDivs(user.ships[i], fleetContainer, user, shipName);
   }
 }
 
-function shipDivs(ship, container, user) {
+function shipDivs(ship, container, user, shipName) {
+  const childContainer = document.createElement('div');
   const div = document.createElement('div');
   div.className = 'ship-container';
   div.classList.add(user.ships.name);
   for (let i = 0; i < ship.length; i++) {
     const shipPart = document.createElement('div');
     shipPart.className = 'ship';
+
     div.appendChild(shipPart);
   }
-  container.appendChild(div);
+  childContainer.appendChild(shipName);
+  childContainer.appendChild(div);
+  container.appendChild(childContainer);
 }
 
 document.getElementById('start').addEventListener('click', () => {
@@ -133,12 +136,7 @@ Need to figure out how to connect user.ship to carrier div for gameboard.placeSh
 *** Complete gameboard.randPlace() to shuffle computer placements
 	Connect to shuffle button at bottom of board for player shuffle placements
 
-*** Start game button
-	Connect startGame func with start button on bottom of board
-
 *** Create modal to display thrown errors
 
 *** Create modal for game over with reset btn and play again btn
-
-*** Change .boats container to display boats horizontally instead of vertically
 */
