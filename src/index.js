@@ -21,6 +21,8 @@ function startGame() {
   setBoard(player);
   displayFleet(player);
   setBoard(computer);
+  console.log(computer.ships[1]);
+  computer.gameBoard.placeShip(computer.ships[1], 'd4');
 }
 
 function buildPlayer(name) {
@@ -37,6 +39,7 @@ function buildComputer(name) {
   let gameBoard = boardModule.buildBoard();
   const computer = new playerModule.Player(name, gameBoard, fleet);
   computer.gameBoard.displayBoard();
+  shuffleShips(computer);
   return computer;
 }
 
@@ -74,6 +77,7 @@ function setBoard(user) {
       //console.log(row);
       //console.log('compRow' + num);
       td.textContent = user.gameBoard.squareArr[i];
+      td.setAttribute('id', `${user.gameBoard.squareArr[i]}`);
       row.appendChild(td);
     }
     return;
@@ -114,6 +118,29 @@ function shipDivs(ship, container, user, shipName) {
   container.appendChild(childContainer);
 }
 
+function shuffleShips(user) {
+  let shipsArr = [];
+  for (let i = 0; i < user.ships.length; i++) {
+    shipsArr.push(user.ships[i].name);
+  }
+
+  console.log(user.ships);
+  // needs to continue looping until all of array is placed
+
+  for (let i = 0; i < user.ships.length; i++) {
+    let boardRows = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
+    let num = user.randomLoc(boardRows);
+    console.log(num);
+    user.ships[i].horizontal === user.randomBool();
+    try {
+      user.gameBoard.randPlace(user.ships[i], num);
+    } catch (err) {
+      i--;
+      console.log('An error has occured on shuffle' + err);
+    }
+  }
+}
+
 document.getElementById('start').addEventListener('click', () => {
   startGame();
 });
@@ -135,8 +162,14 @@ Need to figure out how to connect user.ship to carrier div for gameboard.placeSh
 
 *** Complete gameboard.randPlace() to shuffle computer placements
 	Connect to shuffle button at bottom of board for player shuffle placements
+			- Need to give all td IDs based on their number from 0-99
+			- Split randNum to if < 10 a + num else 1-x = b, c, d, etc.
+			   then combine and return c6 as string
 
+			WORKING ^^^^^
 *** Create modal to display thrown errors
+
+*** Add toggle direction button to each ship div
 
 *** Create modal for game over with reset btn and play again btn
 */

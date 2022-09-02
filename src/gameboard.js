@@ -29,6 +29,7 @@ function buildBoard() {
       //catch needed if vertical placement ends with undefined arr
       let placement = this.squareArr.indexOf(location);
       let start = this.squareArr[placement];
+      document.getElementById(location).classList.add('ship');
 
       if (ship.horizontal === true) {
         try {
@@ -117,9 +118,59 @@ function buildBoard() {
         }
       }
     },
-    randPlace() {
-      //for loop of the ships array that grabs a random number 0-99 and places the ships incrementally on the board
-      //Also should randomly toggle ship.horizontal
+    randPlace(ship, location) {
+      //need try and catch if user places board hori and placement changes letter
+      //catch needed if vertical placement ends with undefined arr
+      let placement = this.squareArr.indexOf(location);
+      let start = this.squareArr[placement];
+
+      if (ship.horizontal === true) {
+        try {
+          let end = this.squareArr[placement + ship.length];
+          for (i = 0; i < ship.length; i++) {
+            if (start.charAt(0) != end.charAt(0)) {
+              //console.log(`Start ${start.charAt(0)} End ${end.charAt(0)}`);
+              throw new Error('Cannot place, ship is out of bounds');
+            } else if (this.squareArr[placement + i] === 'O') {
+              throw new Error('Error: another ship is at this location');
+            }
+            //ship.coordinates.push(this.squareArr[placement + i]);
+            const div = document.getElementById(
+              `${this.squareArr[placement + i]}`
+            );
+            this.placedShips.push(ship);
+            ship.coordinates.push(placement + i);
+            this.squareArr.splice(placement + i, 1, 'O');
+            div.classList.add('ship');
+            console.log(this.squareArr);
+          }
+        } catch (e) {
+          console.error('ALERT Cannot place ship out of bounds');
+          // func to alert screen of error
+          // func to place ship again in diff location
+        }
+      } else {
+        try {
+          let end = this.squareArr[placement + ship.length * 10];
+          for (i = 0; i < ship.length; i++) {
+            if (end === undefined) {
+              throw new Error('Cannot place, ship is out of bounds');
+            } else if (this.squareArr[placement + i * 10] === 'O') {
+              throw new Error('Error: another ship is at this location');
+            }
+            //ship.coordinates.push(this.squareArr[placement + i * 10]);
+            this.placedShips.push(ship);
+            ship.coordinates.push(placement + i * 10);
+            this.squareArr.splice(placement + i * 10, 1, 'O');
+            console.log(this.squareArr);
+          }
+        } catch (e) {
+          console.log('this error msg is working');
+          console.error(e);
+          // func to alert screen of error
+          // func to place ship again in diff location
+        }
+      }
     }
   };
 }

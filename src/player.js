@@ -16,9 +16,21 @@ function Player(name, gameBoard, ships) {
         this.randomNum();
       }
     },
+    randomLoc(rows) {
+      let num = Math.floor(Math.random() * 100);
+      if (num < 10) {
+        return 'a' + num;
+      } else {
+        num = num.toString().split('');
+        let num1 = num[0];
+        let num2 = num[1];
+        num1 = rows[num1];
+        return num1 + num2;
+      }
+    },
     randomBool() {
       var random_boolean = Math.random() < 0.5;
-      return random_booleanl;
+      return random_boolean;
     }
   };
 }
