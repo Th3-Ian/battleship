@@ -124,7 +124,6 @@ function buildBoard() {
       let placement = this.squareArr.indexOf(location);
       let start = this.squareArr[placement];
       let randNumber = user.randomLoc();
-
       if (ship.horizontal === true) {
         let endPos = placement + ship.length - 1;
         let end = this.squareArr[endPos];
@@ -137,14 +136,13 @@ function buildBoard() {
               throw new Error('Error: another ship is at this location');
             }
             //ship.coordinates.push(this.squareArr[placement + i]);
-            /*
-            const div = document.getElementById(
-              `${this.squareArr[placement + i]}`
-            );
-						*/
+
+            //let div = document.getElementById(placement);
+
             this.placedShips.push(ship);
             ship.coordinates.push(placement + i);
             this.squareArr.splice(placement + i, 1, 'O');
+            //div.classList.add('ship');
             //console.log(ship.name + ' placed correctly');
           }
           //console.log(this.squareArr);
@@ -173,13 +171,6 @@ function buildBoard() {
             }
           }
           //writes to gameboard
-          console.log(
-            'this is the placement ' +
-              placement +
-              ' this is the location ' +
-              location
-          );
-          console.log(this.placedShips);
           for (i = 0; i < ship.length; i++) {
             //ship.coordinates.push(this.squareArr[placement + i * 10]);
             this.placedShips.push(ship);

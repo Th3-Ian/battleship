@@ -21,6 +21,9 @@ function startGame() {
   setBoard(player);
   displayFleet(player);
   setBoard(computer);
+  document.getElementById('shuffle').addEventListener('click', () => {
+    shuffleShips(player);
+  });
 }
 
 function buildPlayer(name) {
@@ -72,8 +75,6 @@ function setBoard(user) {
       let td = document.createElement('td');
       let num = Math.floor(i / 10) + 1;
       let row = document.querySelector(`#compRow${num}`);
-      //console.log(row);
-      //console.log('compRow' + num);
       td.textContent = user.gameBoard.squareArr[i];
       td.setAttribute('id', `${user.gameBoard.squareArr[i]}`);
       row.appendChild(td);
@@ -85,6 +86,7 @@ function setBoard(user) {
       let num = Math.floor(i / 10) + 1;
       let row = document.querySelector(`#playerRow${num}`);
       td.textContent = user.gameBoard.squareArr[i];
+      td.setAttribute('id', `${user.gameBoard.squareArr[i]}`);
       row.appendChild(td);
     }
   }
@@ -122,15 +124,22 @@ function shuffleShips(user) {
     shipsArr.push(user.ships[i].name);
   }
 
-  // needs to continue looping until all of array is placed
-
   for (let i = 0; i < user.ships.length; i++) {
     let num = user.randomLoc();
-    console.log(num);
     user.ships[i].horizontal = user.randomBool();
-    console.log(user.ships[i]);
     user.gameBoard.randPlace(user.ships[i], num, user);
   }
+
+  if (user.name === 'Ian') clearBoard(user);
+}
+
+function clearBoard(user) {
+  const tbody = document.getElementById('playerBoard');
+  const tds = tbody.querySelectorAll('td');
+  Array.prototype.forEach.call(tds, function (node) {
+    node.parentNode.removeChild(node);
+  });
+  setBoard(user);
 }
 
 document.getElementById('start').addEventListener('click', () => {
@@ -151,11 +160,6 @@ Need to figure out how to connect user.ship to carrier div for gameboard.placeSh
 *** attacking
  1 - dom listener put in gameloop func to call gameboard.receiveAttack()
 		^^ create two new css classes for hit and miss for the board divs
-
-*** Complete gameboard.randPlace() to shuffle computer placements
-	Connect to shuffle button at bottom of board for player shuffle placements
-			- bug when ship.horizontal === false and placement ontop of already placed ship
-			  board will automatically place ship at j10 then loop to a10, b10 etc.
 
 			WORKING ^^^^^
 *** Create modal to display thrown errors
