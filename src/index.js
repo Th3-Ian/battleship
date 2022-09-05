@@ -2,7 +2,8 @@ import './styles/main.scss';
 const boardModule = require('./gameboard');
 const shipModule = require('./ship.js');
 const playerModule = require('./player.js');
-// const domModule = require('./dom.js');
+const modalModule = require('./modal.js');
+
 const shipTypesArr = [
   ['Carrier', 5],
   ['Battleship', 4],
@@ -123,6 +124,7 @@ function shuffleShips(user) {
   for (let i = 0; i < user.ships.length; i++) {
     shipsArr.push(user.ships[i].name);
   }
+  modalModule.openModal();
 
   for (let i = 0; i < user.ships.length; i++) {
     let num = user.randomLoc();
@@ -161,8 +163,9 @@ Need to figure out how to connect user.ship to carrier div for gameboard.placeSh
  1 - dom listener put in gameloop func to call gameboard.receiveAttack()
 		^^ create two new css classes for hit and miss for the board divs
 
-			WORKING ^^^^^
+
 *** Create modal to display thrown errors
+		WORKING ^^^^^
 
 *** Add toggle direction button to each ship div
 
