@@ -118,15 +118,17 @@ function buildBoard() {
         }
       }
     },
-    randPlace(ship, location) {
+    randPlace(ship, location, user) {
       //need try and catch if user places board hori and placement changes letter
       //catch needed if vertical placement ends with undefined arr
       let placement = this.squareArr.indexOf(location);
       let start = this.squareArr[placement];
+      let randNumber = user.randomLoc();
 
       if (ship.horizontal === true) {
+        let endPos = placement + ship.length - 1;
+        let end = this.squareArr[endPos];
         try {
-          let end = this.squareArr[placement + ship.length];
           for (i = 0; i < ship.length; i++) {
             if (start.charAt(0) != end.charAt(0)) {
               //console.log(`Start ${start.charAt(0)} End ${end.charAt(0)}`);
@@ -135,38 +137,63 @@ function buildBoard() {
               throw new Error('Error: another ship is at this location');
             }
             //ship.coordinates.push(this.squareArr[placement + i]);
+            /*
             const div = document.getElementById(
               `${this.squareArr[placement + i]}`
             );
+						*/
             this.placedShips.push(ship);
             ship.coordinates.push(placement + i);
             this.squareArr.splice(placement + i, 1, 'O');
-            div.classList.add('ship');
-            console.log(this.squareArr);
+            //console.log(ship.name + ' placed correctly');
           }
+          //console.log(this.squareArr);
         } catch (e) {
-          console.error('ALERT Cannot place ship out of bounds');
+          //let num = user.randomLoc();
+          console.log('this is the random number horizontal ' + randNumber);
+          console.log('this ship will be called again ' + ship);
+          console.error(e);
+          this.randPlace(ship, randNumber, user);
           // func to alert screen of error
           // func to place ship again in diff location
         }
-      } else {
+      } else if (ship.horizontal === false) {
         try {
-          let end = this.squareArr[placement + ship.length * 10];
+          let end = this.squareArr[placement + ship.length * 10 - 10];
+          //loop to check if ship placed before actually updating board
           for (i = 0; i < ship.length; i++) {
             if (end === undefined) {
               throw new Error('Cannot place, ship is out of bounds');
+            } else if (placement < 0) {
+              console.log('BUG FIXED');
+              throw new Error('Error: another ship is at this location');
             } else if (this.squareArr[placement + i * 10] === 'O') {
+              console.log('ANOTHER SHIP AT LOCATION ERROR CAUGHT');
               throw new Error('Error: another ship is at this location');
             }
+          }
+          //writes to gameboard
+          console.log(
+            'this is the placement ' +
+              placement +
+              ' this is the location ' +
+              location
+          );
+          console.log(this.placedShips);
+          for (i = 0; i < ship.length; i++) {
             //ship.coordinates.push(this.squareArr[placement + i * 10]);
             this.placedShips.push(ship);
             ship.coordinates.push(placement + i * 10);
             this.squareArr.splice(placement + i * 10, 1, 'O');
-            console.log(this.squareArr);
+            //console.log(this.squareArr);
+            //console.log(ship.name + ' placed correctly');
           }
-        } catch (e) {
-          console.log('this error msg is working');
-          console.error(e);
+        } catch (err) {
+          //let num = user.randomLoc();
+          console.log('this is the random number verticle ' + randNumber);
+          console.log('this ship will be called again ' + ship);
+          console.error(err);
+          this.randPlace(ship, randNumber, user);
           // func to alert screen of error
           // func to place ship again in diff location
         }

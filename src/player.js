@@ -16,7 +16,8 @@ function Player(name, gameBoard, ships) {
         this.randomNum();
       }
     },
-    randomLoc(rows) {
+    randomLoc() {
+      let rows = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
       let num = Math.floor(Math.random() * 100);
       if (num < 10) {
         return 'a' + num;
@@ -24,6 +25,7 @@ function Player(name, gameBoard, ships) {
         num = num.toString().split('');
         let num1 = num[0];
         let num2 = num[1];
+        num2 = parseInt(num2) + 1;
         num1 = rows[num1];
         return num1 + num2;
       }
