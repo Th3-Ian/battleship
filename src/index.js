@@ -144,6 +144,13 @@ function clearBoard(user) {
   setBoard(user);
 }
 
+document.getElementById('overlay').addEventListener('click', () => {
+  modalModule.closeModal();
+});
+document.getElementById('close-modal').addEventListener('click', () => {
+  modalModule.closeModal();
+});
+
 document.getElementById('start').addEventListener('click', () => {
   startGame();
 });
@@ -165,6 +172,8 @@ Need to figure out how to connect user.ship to carrier div for gameboard.placeSh
 
 
 *** Create modal to display thrown errors
+			- import to all files that need to show a thrown error
+			- get event listener for modalCLose to work
 		WORKING ^^^^^
 
 *** Add toggle direction button to each ship div

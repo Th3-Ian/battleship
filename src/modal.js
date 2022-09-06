@@ -1,7 +1,6 @@
 // Variable
 const modalDiv = document.querySelector('.modal');
 const overlayDiv = document.querySelector('#overlay');
-const closeBtn = document.querySelector('.close-modal');
 let titleDiv = modalDiv.querySelector('.title');
 let bodyDiv = modalDiv.querySelector('.modal-body');
 
@@ -20,7 +19,3 @@ export function closeModal() {
   modalDiv.classList.remove('active');
   overlayDiv.classList.remove('active');
 }
-
-// Event Listeners
-overlayDiv.addEventListener('click', closeModal());
-closeBtn.addEventListener('click', closeModal());
