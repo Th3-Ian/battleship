@@ -1,6 +1,7 @@
 // Variable
 const modalDiv = document.querySelector('.modal');
 const overlayDiv = document.querySelector('#overlay');
+const newGameBtn = document.querySelector('#newGame');
 let titleDiv = modalDiv.querySelector('.title');
 let bodyDiv = modalDiv.querySelector('.modal-body');
 
@@ -18,4 +19,9 @@ export function closeModal() {
   bodyDiv.textContent = '';
   modalDiv.classList.remove('active');
   overlayDiv.classList.remove('active');
+  newGameBtn.classList.remove('active');
+}
+
+export function addNewGameBtn() {
+  newGameBtn.classList.add('active');
 }

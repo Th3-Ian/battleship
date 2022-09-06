@@ -50,7 +50,10 @@ function gameLoop(player) {
   player.gameBoard;
 }
 
-function endGame() {}
+function endGame() {
+  modalModule.openModal('Game Win', 'Would you like to start a new game?');
+  modalModule.addNewGameBtn();
+}
 
 function getName() {
   //grab from txt in text box
@@ -146,14 +149,17 @@ function clearBoard(user) {
 document.getElementById('overlay').addEventListener('click', () => {
   modalModule.closeModal();
 });
-document.getElementById('close-modal').addEventListener('click', () => {
+document.getElementById('closeModal').addEventListener('click', () => {
   modalModule.closeModal();
+});
+
+document.getElementById('newGame').addEventListener('click', () => {
+  document.reload();
 });
 
 document.getElementById('start').addEventListener('click', () => {
   startGame();
 });
-//startGame();
 
 /*
 *** placing use ship todo
@@ -169,12 +175,5 @@ Need to figure out how to connect user.ship to carrier div for gameboard.placeSh
  1 - dom listener put in gameloop func to call gameboard.receiveAttack()
 		^^ create two new css classes for hit and miss for the board divs
 
-
-*** Create modal to display thrown errors
-			- import to all files that need to show a thrown error
-		WORKING ^^^^^
-
 *** Add toggle direction button to each ship div
-
-*** Create modal for game over with reset btn and play again btn
 */

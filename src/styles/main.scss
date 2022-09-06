@@ -154,3 +154,11 @@ th {
 	opacity: 70%;
 	pointer-events: all;
 }
+
+#newGame {
+	opacity: 0;
+}
+
+#newGame.active {
+	opacity: 1;
+}
