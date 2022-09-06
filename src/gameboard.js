@@ -1,3 +1,5 @@
+const modalModule = require('./modal.js');
+
 function buildBoard() {
   return {
     columns: 10,
@@ -25,53 +27,51 @@ function buildBoard() {
       }
     },
     placeShip(ship, location) {
-      //need try and catch if user places board hori and placement changes letter
-      //catch needed if vertical placement ends with undefined arr
       let placement = this.squareArr.indexOf(location);
       let start = this.squareArr[placement];
-      document.getElementById(location).classList.add('ship');
-
       if (ship.horizontal === true) {
+        let endPos = placement + ship.length - 1;
+        let end = this.squareArr[endPos];
         try {
-          let end = this.squareArr[placement + ship.length];
           for (i = 0; i < ship.length; i++) {
             if (start.charAt(0) != end.charAt(0)) {
-              //console.log(`Start ${start.charAt(0)} End ${end.charAt(0)}`);
               throw new Error('Cannot place, ship is out of bounds');
             } else if (this.squareArr[placement + i] === 'O') {
               throw new Error('Error: another ship is at this location');
             }
-            //ship.coordinates.push(this.squareArr[placement + i]);
+
             this.placedShips.push(ship);
             ship.coordinates.push(placement + i);
             this.squareArr.splice(placement + i, 1, 'O');
           }
-        } catch (e) {
-          console.error('ALERT Cannot place ship out of bounds');
-          return e.message;
-          // func to alert screen of error
-          // func to place ship again in diff location
+        } catch (err) {
+          modalModule.openModal('Error', err);
+          console.error(err);
+          return;
         }
-      } else {
+      } else if (ship.horizontal === false) {
         try {
-          let end = this.squareArr[placement + ship.length * 10];
+          let end = this.squareArr[placement + ship.length * 10 - 10];
+          //loop to check if ship placed before actually updating board
           for (i = 0; i < ship.length; i++) {
             if (end === undefined) {
               throw new Error('Cannot place, ship is out of bounds');
+            } else if (placement < 0) {
+              throw new Error('Error: another ship is at this location');
             } else if (this.squareArr[placement + i * 10] === 'O') {
               throw new Error('Error: another ship is at this location');
             }
-            //ship.coordinates.push(this.squareArr[placement + i * 10]);
+          }
+          //writes to gameboard
+          for (i = 0; i < ship.length; i++) {
             this.placedShips.push(ship);
             ship.coordinates.push(placement + i * 10);
             this.squareArr.splice(placement + i * 10, 1, 'O');
           }
-        } catch (e) {
-          console.log('this error msg is working');
-          console.error(e);
-          return e.message;
-          // func to alert screen of error
-          // func to place ship again in diff location
+        } catch (err) {
+          modalModule.openModal('ERROR!', err);
+          console.error(err);
+          return;
         }
       }
     },
@@ -102,9 +102,10 @@ function buildBoard() {
           console.log(`This is the board missedArr ${this.missedArr}`);
           this.squareArr.splice(coord, 1, 'X');
         }
-      } catch (e) {
-        console.log(e);
-        return e.message;
+      } catch (err) {
+        console.log(err);
+        modalModule.openModal('ERROR!', err);
+        return;
       }
     },
     gameLoss() {
@@ -114,7 +115,8 @@ function buildBoard() {
           break;
         } else {
           console.log('Game over');
-          return 'Game Over';
+          modalModule.openModal('GAME OVER', 'You lost :(');
+          return;
         }
       }
     },
@@ -146,11 +148,12 @@ function buildBoard() {
             //console.log(ship.name + ' placed correctly');
           }
           //console.log(this.squareArr);
-        } catch (e) {
+        } catch (err) {
           //let num = user.randomLoc();
           console.log('this is the random number horizontal ' + randNumber);
           console.log('this ship will be called again ' + ship);
-          console.error(e);
+          modalModule.openModal('Error', err);
+          console.error(err);
           this.randPlace(ship, randNumber, user);
           // func to alert screen of error
           // func to place ship again in diff location
@@ -183,6 +186,7 @@ function buildBoard() {
           //let num = user.randomLoc();
           console.log('this is the random number verticle ' + randNumber);
           console.log('this ship will be called again ' + ship);
+          modalModule.openModal('ERROR!', err);
           console.error(err);
           this.randPlace(ship, randNumber, user);
           // func to alert screen of error

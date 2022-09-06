@@ -124,7 +124,6 @@ function shuffleShips(user) {
   for (let i = 0; i < user.ships.length; i++) {
     shipsArr.push(user.ships[i].name);
   }
-  modalModule.openModal();
 
   for (let i = 0; i < user.ships.length; i++) {
     let num = user.randomLoc();
@@ -173,7 +172,6 @@ Need to figure out how to connect user.ship to carrier div for gameboard.placeSh
 
 *** Create modal to display thrown errors
 			- import to all files that need to show a thrown error
-			- get event listener for modalCLose to work
 		WORKING ^^^^^
 
 *** Add toggle direction button to each ship div
