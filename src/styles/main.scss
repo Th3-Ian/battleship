@@ -90,7 +90,31 @@ th {
 }
 
 .ship-container {
-	display: flex;
+	display: block;
+	border: 1px darkblue solid;
+	padding-right: 10px;
+	background-color: green;
+	z-index: 4;
+	height: 2.5rem;
+}
+
+.Carrier {
+	width: 15rem;
+}
+
+.Battleship {
+	width: 12rem;
+}
+
+.Cruiser {
+	width: 9rem;
+}
+
+.Submarine {
+	width: 9rem;
+}
+.Destroyer {
+	width: 6rem;
 }
 
 /* MODAL POP UP */
@@ -161,4 +185,14 @@ th {
 
 #newGame.active {
 	opacity: 1;
+}
+
+.ship-container.selected {
+	outline: 4px;
+	border-color: #688eac;
+	box-shadow: 0 10px 15px #accfeb;
+}
+
+.hidden {
+	display: none;
 }

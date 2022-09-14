@@ -25,6 +25,7 @@ function startGame() {
   document.getElementById('shuffle').addEventListener('click', () => {
     shuffleShips(player);
   });
+  shipEvents();
 }
 
 function buildPlayer(name) {
@@ -109,13 +110,15 @@ function displayFleet(user) {
 function shipDivs(ship, container, user, shipName) {
   const childContainer = document.createElement('div');
   const div = document.createElement('div');
-  div.className = 'ship-container';
-  div.classList.add(ship.name);
+  div.setAttribute('class', `${ship.name} ship-container`);
+  div.setAttribute('id', `${ship.name}`);
   for (let i = 0; i < ship.length; i++) {
+    /*
     const shipPart = document.createElement('div');
-    shipPart.className = 'ship';
+    shipPart.setAttribute('class', 'ship');
 
     div.appendChild(shipPart);
+		*/
   }
   childContainer.appendChild(shipName);
   childContainer.appendChild(div);
@@ -146,6 +149,27 @@ function clearBoard(user) {
   setBoard(user);
 }
 
+function selectShip(ship) {
+  const shipDivs = document.getElementsByClassName('ship-container');
+  const shipArr = Array.prototype.slice.call(shipDivs);
+  shipArr.forEach(function (e) {
+    console.log('removed');
+    e.classList.remove('selected');
+  });
+  console.log('class added selected');
+  ship.classList.add('selected');
+}
+
+function shipEvents() {
+  const shipContainers = document.getElementsByClassName('ship-container');
+
+  for (let i = 0; i < shipContainers.length; i++) {
+    shipContainers[i].addEventListener('click', (e) => {
+      selectShip(e.target);
+    });
+  }
+}
+
 document.getElementById('overlay').addEventListener('click', () => {
   modalModule.closeModal();
 });
@@ -164,16 +188,22 @@ document.getElementById('start').addEventListener('click', () => {
 /*
 *** placing use ship todo
  1 - add button for each shipDiv to transition ship.horizontal true : false
+
  2 - dom listener to drag ship to board location. Then grabs location and ship to call gameboard place ship
    ^^ dom listener should change each location classname to include the '.ship' class
    ^^ other func called from dom listener should change .ship-container display: hidden
 Need to figure out how to connect user.ship to carrier div for gameboard.placeShip()
 		^^ Try using the player const inside of start game
 
+		WORKING - adding event listeners to all the ship-containers
 
 *** attacking
  1 - dom listener put in gameloop func to call gameboard.receiveAttack()
 		^^ create two new css classes for hit and miss for the board divs
 
-*** Add toggle direction button to each ship div
+*** game Win / Lose
+	1. add event listener from index.js that calls gameLoss(USER)
+		check is user is computer or player and then call endGame(modalTitle)
+		if user is computer modalTitle === You win else modalText === you lose
+		both should have 'Would you like to play another game' as the body
 */

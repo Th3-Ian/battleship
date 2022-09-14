@@ -152,7 +152,6 @@ function buildBoard() {
           //let num = user.randomLoc();
           console.log('this is the random number horizontal ' + randNumber);
           console.log('this ship will be called again ' + ship);
-          modalModule.openModal('Error', err);
           console.error(err);
           this.randPlace(ship, randNumber, user);
           // func to alert screen of error
@@ -186,7 +185,6 @@ function buildBoard() {
           //let num = user.randomLoc();
           console.log('this is the random number verticle ' + randNumber);
           console.log('this ship will be called again ' + ship);
-          modalModule.openModal('ERROR!', err);
           console.error(err);
           this.randPlace(ship, randNumber, user);
           // func to alert screen of error
