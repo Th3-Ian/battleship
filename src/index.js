@@ -25,7 +25,7 @@ function startGame() {
   document.getElementById('shuffle').addEventListener('click', () => {
     shuffleShips(player);
   });
-  shipEvents();
+  shipEvents(player);
 }
 
 function buildPlayer(name) {
@@ -92,6 +92,7 @@ function setBoard(user) {
       let row = document.querySelector(`#playerRow${num}`);
       td.textContent = user.gameBoard.squareArr[i];
       td.setAttribute('id', `${user.gameBoard.squareArr[i]}`);
+      td.setAttribute('class', 'player-square');
       row.appendChild(td);
     }
   }
@@ -149,25 +150,46 @@ function clearBoard(user) {
   setBoard(user);
 }
 
-function selectShip(ship) {
+function selectShip(ship, player) {
   const shipDivs = document.getElementsByClassName('ship-container');
   const shipArr = Array.prototype.slice.call(shipDivs);
   shipArr.forEach(function (e) {
-    console.log('removed');
     e.classList.remove('selected');
   });
-  console.log('class added selected');
   ship.classList.add('selected');
+
+  boardAddEvents(ship, player);
 }
 
-function shipEvents() {
+function boardAddEvents(ship, player) {
+  const squareDivs = document.getElementsByClassName('player-square');
+  const shipId = ship.id;
+  for (let i = 0; i < squareDivs.length; i++) {
+    let shipObj = player.ships.find((ship) => ship.name === shipId);
+    squareDivs[i].addEventListener('click', (e) => {
+      let sqrId = squareDivs[i].id;
+      player.gameBoard.placeShip(shipObj, sqrId, ship);
+
+      clearBoard(player);
+      //ship.setAttribute('class', 'hidden');
+      //call function from gameboard after successful placement to remove event listener
+      //look into using clone node function to just remove the old obj
+    });
+  }
+}
+
+function shipEvents(player) {
   const shipContainers = document.getElementsByClassName('ship-container');
 
   for (let i = 0; i < shipContainers.length; i++) {
     shipContainers[i].addEventListener('click', (e) => {
-      selectShip(e.target);
+      selectShip(e.target, player);
     });
   }
+}
+
+export function removeEL(elm) {
+  elm.replaceWith(elm.cloneNode(true));
 }
 
 document.getElementById('overlay').addEventListener('click', () => {

@@ -1,4 +1,5 @@
 const modalModule = require('./modal.js');
+const indexModule = require('./index.js');
 
 function buildBoard() {
   return {
@@ -26,7 +27,7 @@ function buildBoard() {
         return true;
       }
     },
-    placeShip(ship, location) {
+    placeShip(ship, location, shipDiv) {
       let placement = this.squareArr.indexOf(location);
       let start = this.squareArr[placement];
       if (ship.horizontal === true) {
@@ -44,6 +45,7 @@ function buildBoard() {
             ship.coordinates.push(placement + i);
             this.squareArr.splice(placement + i, 1, 'O');
           }
+          indexModule.removeEL(shipDiv);
         } catch (err) {
           modalModule.openModal('Error', err);
           console.error(err);
@@ -68,6 +70,7 @@ function buildBoard() {
             ship.coordinates.push(placement + i * 10);
             this.squareArr.splice(placement + i * 10, 1, 'O');
           }
+          indexModule.removeEL(shipDiv);
         } catch (err) {
           modalModule.openModal('ERROR!', err);
           console.error(err);
