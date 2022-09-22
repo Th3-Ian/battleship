@@ -194,6 +194,7 @@ function boardAddEvents(ship, player) {
       player.gameBoard.placeShip(shipObj, sqrId, ship);
 
       clearBoard(player);
+      shipBoardDisplay(player);
       //ship.setAttribute('class', 'hidden');
       //call function from gameboard after successful placement to remove event listener
       //look into using clone node function to just remove the old obj
@@ -208,6 +209,23 @@ function shipEvents(player) {
     shipContainers[i].addEventListener('click', (e) => {
       selectShip(e.target, player);
     });
+  }
+}
+
+function shipBoardDisplay(player) {
+  let placedArr = [];
+  for (const ship of player.ships) {
+    for (i = 0; i < ship.coordinates.length; i++) {
+      placedArr.push(ship.coordinates[i]);
+    }
+  }
+  for (i = 0; i < placedArr.length; i++) {
+    let splitNum = Array.from(String(placedArr[i]));
+    let num1 = Number(splitNum[0]) + 1;
+    let num2 = Number(splitNum[1]) + 2;
+    document
+      .querySelector(`#playerRow${num1} :nth-child(${num2})`)
+      .classList.add('ship');
   }
 }
 
@@ -232,12 +250,9 @@ document.getElementById('start').addEventListener('click', () => {
 
 /*
 *** placing use ship todo
- 1 - add button for each shipDiv to transition ship.horizontal true : false
+ 1 - dom listener to drag ship to board location. Then grabs location and ship to call gameboard place ship
 
- 2 - dom listener to drag ship to board location. Then grabs location and ship to call gameboard place ship
-   ^^ dom listener should change each location classname to include the '.ship' class
-	 ^^ add hover highlight to board space when placing ship
-
+ 2 - add hover highlight to board space when placing ship
 
 *** attacking
  1 - dom listener put in gameloop func to call gameboard.receiveAttack()
