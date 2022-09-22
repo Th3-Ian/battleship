@@ -199,6 +199,12 @@ function boardAddEvents(ship, player) {
       //call function from gameboard after successful placement to remove event listener
       //look into using clone node function to just remove the old obj
     });
+    squareDivs[i].addEventListener('mouseover', () => {
+      squareDivs[i].classList.add('selected');
+    });
+    squareDivs[i].addEventListener('mouseout', () => {
+      squareDivs[i].classList.remove('selected');
+    });
   }
 }
 
