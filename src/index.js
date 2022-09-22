@@ -12,7 +12,9 @@ const shipTypesArr = [
   ['Destroyer', 2]
 ];
 
-let playersStart = ['Ian', 'Computer'];
+const horizontalBtn = document.getElementById('horizontal');
+
+const playersStart = ['Ian', 'Computer'];
 
 function startGame() {
   console.log('start game one time');
@@ -157,8 +159,29 @@ function selectShip(ship, player) {
     e.classList.remove('selected');
   });
   ship.classList.add('selected');
+  addHoriListener(ship, player);
 
   boardAddEvents(ship, player);
+}
+
+function addHoriListener(ship, player) {
+  const shipId = ship.id;
+  let shipObj = player.ships.find((ship) => ship.name === shipId);
+  horizontalBtn.addEventListener('click', () => {
+    shipObj.toggleDirection();
+    horizontalBtn.textContent = '';
+    shipObj.horizontal === true
+      ? (horizontalBtn.textContent = 'Horizontal')
+      : (horizontalBtn.textContent = 'Verticle');
+  });
+}
+
+export function resetUI(ship) {
+  const squareDivs = document.getElementsByClassName('ship-container');
+  for (let i = 0; i < squareDivs.length; i++) {
+    squareDivs[i].classList.remove('selected');
+  }
+  horizontalBtn.textContent = 'Horizontal';
 }
 
 function boardAddEvents(ship, player) {
@@ -213,11 +236,8 @@ document.getElementById('start').addEventListener('click', () => {
 
  2 - dom listener to drag ship to board location. Then grabs location and ship to call gameboard place ship
    ^^ dom listener should change each location classname to include the '.ship' class
-   ^^ other func called from dom listener should change .ship-container display: hidden
-Need to figure out how to connect user.ship to carrier div for gameboard.placeShip()
-		^^ Try using the player const inside of start game
+	 ^^ add hover highlight to board space when placing ship
 
-		WORKING - adding event listeners to all the ship-containers
 
 *** attacking
  1 - dom listener put in gameloop func to call gameboard.receiveAttack()

@@ -46,6 +46,7 @@ function buildBoard() {
             this.squareArr.splice(placement + i, 1, 'O');
           }
           indexModule.removeEL(shipDiv);
+          indexModule.resetUI(shipDiv);
         } catch (err) {
           modalModule.openModal('Error', err);
           console.error(err);
@@ -71,6 +72,7 @@ function buildBoard() {
             this.squareArr.splice(placement + i * 10, 1, 'O');
           }
           indexModule.removeEL(shipDiv);
+          indexModule.resetUI(shipDiv);
         } catch (err) {
           modalModule.openModal('ERROR!', err);
           console.error(err);
