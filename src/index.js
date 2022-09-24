@@ -13,13 +13,13 @@ const shipTypesArr = [
 ];
 
 const horizontalBtn = document.getElementById('horizontal');
-
-const playersStart = ['Ian', 'Computer'];
+let countdownNum = 0;
+const playersStart = ['Player', 'Computer'];
+const player = buildPlayer(playersStart[0]);
+const computer = buildComputer(playersStart[1]);
 
 function startGame() {
   console.log('start game one time');
-  const player = buildPlayer(playersStart[0]);
-  const computer = buildComputer(playersStart[1]);
 
   setBoard(player);
   displayFleet(player);
@@ -35,6 +35,7 @@ function buildPlayer(name) {
   let gameBoard = boardModule.buildBoard();
   const player = new playerModule.Player(name, gameBoard, fleet);
   player.gameBoard.displayBoard();
+  player.active = true;
   return player;
 }
 
@@ -48,18 +49,52 @@ function buildComputer(name) {
   return computer;
 }
 
-function gameLoop(player) {
-  //dom listener event for down click on div to recieveHit(div)
+export function gameLoop() {
+  alert('game loop called');
+  if (player.active === true) {
+    alert('player called');
+    makeAttack();
+  } else if (computer.active === true) {
+    alert('Computer called');
+    console.log(player.active);
+    console.log(computer.active);
+    let randNum = computer.randomNum();
+    player.gameBoard.recieveAttack(randNum);
+    //updateActvPlyr();
+    //gameLoop();
+  }
   player.gameBoard;
+}
+
+function makeAttack() {
+  const squareDivs = document.querySelectorAll(`.comp-square`);
+  alert('Make attack called');
+  console.log(squareDivs);
+  for (let i = 0; i < squareDivs.length; i++) {
+    squareDivs[i].addEventListener('click', (e) => {
+      let sqrId = squareDivs[i].id;
+      let sqrNum = squareDivs[i].dataset.num;
+      console.log(sqrId);
+      console.log(sqrNum);
+      computer.gameBoard.recieveAttack(sqrNum, squareDivs[i]);
+      clearBoard(computer);
+      shipBoardDisplay(computer);
+      //ship.setAttribute('class', 'hidden');
+      //call function from gameboard after successful placement to remove event listener
+      //look into using clone node function to just remove the old obj
+    });
+    squareDivs[i].addEventListener('mouseover', () => {
+      squareDivs[i].classList.add('selected');
+    });
+    squareDivs[i].addEventListener('mouseout', () => {
+      squareDivs[i].classList.remove('selected');
+    });
+  }
 }
 
 function endGame() {
   modalModule.openModal('Game Win', 'Would you like to start a new game?');
   modalModule.addNewGameBtn();
-}
-
-function getName() {
-  //grab from txt in text box
 }
 
 function buildFleet() {
@@ -81,13 +116,15 @@ function setBoard(user) {
     for (let i = 0; i < user.gameBoard.squareArr.length; i++) {
       let td = document.createElement('td');
       let num = Math.floor(i / 10) + 1;
-      let row = document.querySelector(`#compRow${num}`);
+      let row = document.querySelector(`#computerRow${num}`);
       td.textContent = user.gameBoard.squareArr[i];
       td.setAttribute('id', `${user.gameBoard.squareArr[i]}`);
+      td.setAttribute('class', 'comp-square');
+      td.setAttribute('data-num', `${i}`);
       row.appendChild(td);
     }
     return;
-  } else if (user.name === 'Ian') {
+  } else if (user.name === 'Player') {
     for (let i = 0; i < user.gameBoard.squareArr.length; i++) {
       let td = document.createElement('td');
       let num = Math.floor(i / 10) + 1;
@@ -140,11 +177,16 @@ function shuffleShips(user) {
     user.gameBoard.randPlace(user.ships[i], num, user);
   }
 
-  if (user.name === 'Ian') clearBoard(user);
+  if (user.name === 'Player') {
+    clearBoard(user);
+    shipBoardDisplay(user);
+    gameLoop(user);
+  }
 }
 
 function clearBoard(user) {
-  const tbody = document.getElementById('playerBoard');
+  let name = user.name.toLowerCase();
+  const tbody = document.getElementById(`${name}Board`);
   const tds = tbody.querySelectorAll('td');
   Array.prototype.forEach.call(tds, function (node) {
     node.parentNode.removeChild(node);
@@ -218,25 +260,35 @@ function shipEvents(player) {
   }
 }
 
+export function updateActvPlyr() {
+  player.toggleActive();
+  computer.toggleActive();
+}
+
 function shipBoardDisplay(player) {
   let placedArr = [];
+  let name = player.name.toLowerCase();
   for (const ship of player.ships) {
     for (i = 0; i < ship.coordinates.length; i++) {
       placedArr.push(ship.coordinates[i]);
     }
   }
+  /*
   for (i = 0; i < placedArr.length; i++) {
     let splitNum = Array.from(String(placedArr[i]));
     let num1 = Number(splitNum[0]) + 1;
     let num2 = Number(splitNum[1]) + 2;
     document
-      .querySelector(`#playerRow${num1} :nth-child(${num2})`)
+      .querySelector(`#${name}Row${num1} :nth-child(${num2})`)
       .classList.add('ship');
   }
+	*/
 }
 
 export function removeEL(elm) {
   elm.replaceWith(elm.cloneNode(true));
+  countdownNum++;
+  if (countdownNum === 5) gameLoop(player);
 }
 
 document.getElementById('overlay').addEventListener('click', () => {
@@ -255,18 +307,23 @@ document.getElementById('start').addEventListener('click', () => {
 });
 
 /*
+
+*** Set start button eventlistener to once: true
 *** placing use ship todo
  1 - dom listener to drag ship to board location. Then grabs location and ship to call gameboard place ship
-
- 2 - add hover highlight to board space when placing ship
 
 *** attacking
  1 - dom listener put in gameloop func to call gameboard.receiveAttack()
 		^^ create two new css classes for hit and miss for the board divs
+
+		^^ Dynamically add data-num = num to computer-squares;
 
 *** game Win / Lose
 	1. add event listener from index.js that calls gameLoss(USER)
 		check is user is computer or player and then call endGame(modalTitle)
 		if user is computer modalTitle === You win else modalText === you lose
 		both should have 'Would you like to play another game' as the body
+
+*** add try and catch for shipBoardDisplay func to catch if NaN happens
+
 */

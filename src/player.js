@@ -33,6 +33,9 @@ function Player(name, gameBoard, ships) {
     randomBool() {
       var random_boolean = Math.random() < 0.5;
       return random_boolean;
+    },
+    toggleActive() {
+      this.active = this.active ? false : true;
     }
   };
 }
