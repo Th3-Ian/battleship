@@ -25,7 +25,6 @@ function buildShip(name, length) {
       let num = n - 1;
       if (num < this.arr.length) {
         this.arr.splice(num, 1, 'X');
-        console.log(this.arr);
         return this.arr;
       } else {
         throw Error('Hit misses');
@@ -41,7 +40,6 @@ function buildShip(name, length) {
     },
     toggleDirection() {
       this.horizontal = this.horizontal ? false : true;
-      //console.log(this.horizontal);
     }
   };
 }

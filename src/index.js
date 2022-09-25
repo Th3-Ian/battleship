@@ -77,7 +77,7 @@ function makeAttack() {
       alert('Event Listener Called');
       let sqrNum = squareDivs[i].dataset.num;
       console.log(sqrNum);
-      computer.gameBoard.recieveAttack(sqrNum, squareDivs[i]);
+      computer.gameBoard.recieveAttack(sqrNum);
       //ship.setAttribute('class', 'hidden');
       //call function from gameboard after successful placement to remove event listener
       //look into using clone node function to just remove the old obj
@@ -264,14 +264,16 @@ export function updateActvPlyr() {
   computer.toggleActive();
 }
 
-function shipBoardDisplay(player) {
+function shipBoardDisplay(user) {
   let placedArr = [];
-  let name = player.name.toLowerCase();
-  for (const ship of player.ships) {
+  let name = user.name.toLowerCase();
+  for (const ship of user.ships) {
     for (i = 0; i < ship.coordinates.length; i++) {
       placedArr.push(ship.coordinates[i]);
     }
   }
+  addHitClass(user);
+  addMissClass(user);
   /*
   for (i = 0; i < placedArr.length; i++) {
     let splitNum = Array.from(String(placedArr[i]));
@@ -282,6 +284,30 @@ function shipBoardDisplay(player) {
       .classList.add('ship');
   }
 	*/
+}
+
+function addHitClass(user) {
+  let name = user.name.toLowerCase();
+  const tbody = document.getElementById(`${name}Board`);
+  let hitArray = user.gameBoard.hitArr;
+  console.log(user.name + ' hit array is ' + hitArray);
+  if (hitArray === []) return;
+  for (i = 0; i < hitArray.length; i++) {
+    let div = tbody.querySelector(`[data-num='${hitArray[i]}']`);
+    div.classList.add('hit-space');
+  }
+}
+
+function addMissClass(user) {
+  let name = user.name.toLowerCase();
+  const tbody = document.getElementById(`${name}Board`);
+  let missArray = user.gameBoard.missedArr;
+  console.log(user.name + ' miss array is ' + missArray);
+  if (missArray === []) return;
+  for (i = 0; i < missArray.length; i++) {
+    let div = tbody.querySelector(`[data-num='${missArray[i]}']`);
+    div.classList.add('miss-space');
+  }
 }
 
 export function removeEL(elm) {
@@ -314,6 +340,7 @@ document.getElementById('start').addEventListener('click', () => {
 *** attacking
  1 - dom listener put in gameloop func to call gameboard.receiveAttack()
 		^^ create two new css classes for hit and miss for the board divs
+		^^ update querySelector in add miss & hit class functions
 
 *** game Win / Lose
 	1. add event listener from index.js that calls gameLoss(USER)

@@ -6,6 +6,7 @@ function buildBoard() {
     columns: 10,
     rows: 10,
     squareArr: [],
+    hitArr: [],
     missedArr: [],
     placedShips: [],
     hitNum: 0,
@@ -80,7 +81,7 @@ function buildBoard() {
         }
       }
     },
-    recieveAttack(coord, div) {
+    recieveAttack(coord) {
       //let coord = this.squareArr.indexOf(location);
       //coord = coord - 1;
       const placed = this.placedShips;
@@ -89,7 +90,8 @@ function buildBoard() {
         if (this.squareArr[coord] === 'O') {
           console.log('HIT!');
           this.hitNum++;
-
+          this.hitArr.push(coord);
+          console.log(this.hitArr);
           for (let i = 0; i < placed.length; i++) {
             for (let j = 0; j < placed[i].coordinates.length; j++) {
               if (placed[j].coordinates[j] === coord) {
@@ -102,7 +104,6 @@ function buildBoard() {
           // then grabs the index that matches the ship.coord and splices it in ship.arr
           this.squareArr.splice(coord, 1, 'X');
           indexModule.updateActvPlyr();
-          //indexModule.removeEL(div);
           indexModule.gameLoop();
         } else if (this.squareArr[coord] === 'X') {
           throw new Error('Error: Already attacked this location');
@@ -112,7 +113,6 @@ function buildBoard() {
           console.log(`This is the board missedArr ${this.missedArr}`);
           this.squareArr.splice(coord, 1, 'X');
           indexModule.updateActvPlyr();
-          //indexModule.removeEL(div);
           indexModule.gameLoop();
         }
       } catch (err) {
