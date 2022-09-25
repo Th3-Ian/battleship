@@ -56,8 +56,8 @@ export function gameLoop() {
     makeAttack();
   } else if (computer.active === true) {
     alert('Computer called');
-    console.log(player.active);
-    console.log(computer.active);
+    clearBoard(player);
+    shipBoardDisplay(player);
     let randNum = computer.randomNum();
     player.gameBoard.recieveAttack(randNum);
     //updateActvPlyr();
@@ -67,18 +67,17 @@ export function gameLoop() {
 }
 
 function makeAttack() {
+  clearBoard(computer);
+  shipBoardDisplay(computer);
   const squareDivs = document.querySelectorAll(`.comp-square`);
   alert('Make attack called');
   console.log(squareDivs);
   for (let i = 0; i < squareDivs.length; i++) {
     squareDivs[i].addEventListener('click', (e) => {
-      let sqrId = squareDivs[i].id;
+      alert('Event Listener Called');
       let sqrNum = squareDivs[i].dataset.num;
-      console.log(sqrId);
       console.log(sqrNum);
       computer.gameBoard.recieveAttack(sqrNum, squareDivs[i]);
-      clearBoard(computer);
-      shipBoardDisplay(computer);
       //ship.setAttribute('class', 'hidden');
       //call function from gameboard after successful placement to remove event listener
       //look into using clone node function to just remove the old obj
@@ -315,8 +314,6 @@ document.getElementById('start').addEventListener('click', () => {
 *** attacking
  1 - dom listener put in gameloop func to call gameboard.receiveAttack()
 		^^ create two new css classes for hit and miss for the board divs
-
-		^^ Dynamically add data-num = num to computer-squares;
 
 *** game Win / Lose
 	1. add event listener from index.js that calls gameLoss(USER)
