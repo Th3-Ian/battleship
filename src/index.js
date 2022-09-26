@@ -22,9 +22,13 @@ function startGame() {
   setBoard(player);
   displayFleet(player);
   setBoard(computer);
-  document.getElementById('shuffle').addEventListener('click', () => {
-    shuffleShips(player);
-  });
+  document.getElementById('shuffle').addEventListener(
+    'click',
+    () => {
+      shuffleShips(player);
+    },
+    { once: true }
+  );
   shipEvents(player);
 }
 

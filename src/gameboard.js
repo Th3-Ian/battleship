@@ -85,8 +85,6 @@ function buildBoard() {
       //let coord = this.squareArr.indexOf(location);
       //coord = coord - 1;
       const placed = this.placedShips;
-      //console.log('This is coordinates ' + coord);
-      console.log(placed);
       try {
         if (this.squareArr[coord] === 'O') {
           //modalModule.openModal('Hit', "You've hit your target!");
@@ -120,8 +118,9 @@ function buildBoard() {
           indexModule.gameLoop();
         }
       } catch (err) {
-        console.log(user.name);
-        if (user.name === 'Player') modalModule.openModal('ERROR!', err);
+        console.log(err);
+        if (user.name === 'Player' && err != TypeError)
+          modalModule.openModal('ERROR!', err);
         indexModule.gameLoop();
         return;
       }
