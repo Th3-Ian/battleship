@@ -314,7 +314,7 @@ document.getElementById('closeModal').addEventListener('click', () => {
 });
 
 document.getElementById('newGame').addEventListener('click', () => {
-  document.reload();
+  location.reload();
 });
 
 document.getElementById('start').addEventListener(
