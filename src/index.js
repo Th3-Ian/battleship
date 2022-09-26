@@ -258,6 +258,7 @@ export function updateActvPlyr() {
 function shipBoardDisplay(user) {
   let placedArr = [];
   let name = user.name.toLowerCase();
+  const tbody = document.getElementById(`${name}Board`);
   for (const ship of user.ships) {
     for (i = 0; i < ship.coordinates.length; i++) {
       placedArr.push(ship.coordinates[i]);
@@ -265,16 +266,13 @@ function shipBoardDisplay(user) {
   }
   addHitClass(user);
   addMissClass(user);
-  /*
-  for (i = 0; i < placedArr.length; i++) {
-    let splitNum = Array.from(String(placedArr[i]));
-    let num1 = Number(splitNum[0]) + 1;
-    let num2 = Number(splitNum[1]) + 2;
-    document
-      .querySelector(`#${name}Row${num1} :nth-child(${num2})`)
-      .classList.add('ship');
+  if (name === 'player') {
+    for (i = 0; i < placedArr.length; i++) {
+      console.log(placedArr[i]);
+      let div = tbody.querySelector(`[data-num='${placedArr[i]}']`);
+      div.classList.add('ship');
+    }
   }
-	*/
 }
 
 function addHitClass(user) {
