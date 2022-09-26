@@ -19,8 +19,6 @@ const player = buildPlayer(playersStart[0]);
 const computer = buildComputer(playersStart[1]);
 
 function startGame() {
-  console.log('start game one time');
-
   setBoard(player);
   displayFleet(player);
   setBoard(computer);
@@ -40,7 +38,6 @@ function buildPlayer(name) {
 }
 
 function buildComputer(name) {
-  console.log('build pc one time');
   let fleet = buildFleet();
   let gameBoard = boardModule.buildBoard();
   const computer = new playerModule.Player(name, gameBoard, fleet);
@@ -50,7 +47,7 @@ function buildComputer(name) {
 }
 
 export function gameLoop() {
-  alert('game loop called');
+  const randNum = player.randomNum();
   if (player.active === true) {
     alert('player called');
     makeAttack();
@@ -58,12 +55,9 @@ export function gameLoop() {
     alert('Computer called');
     clearBoard(player);
     shipBoardDisplay(player);
-    let randNum = computer.randomNum();
+    //console.log('Computer randNum ' + randNum);
     player.gameBoard.recieveAttack(randNum);
-    //updateActvPlyr();
-    //gameLoop();
   }
-  player.gameBoard;
 }
 
 function makeAttack() {
@@ -71,12 +65,10 @@ function makeAttack() {
   shipBoardDisplay(computer);
   const squareDivs = document.querySelectorAll(`.comp-square`);
   alert('Make attack called');
-  console.log(squareDivs);
   for (let i = 0; i < squareDivs.length; i++) {
     squareDivs[i].addEventListener('click', (e) => {
       alert('Event Listener Called');
       let sqrNum = squareDivs[i].dataset.num;
-      console.log(sqrNum);
       computer.gameBoard.recieveAttack(sqrNum);
       //ship.setAttribute('class', 'hidden');
       //call function from gameboard after successful placement to remove event listener
@@ -130,6 +122,7 @@ function setBoard(user) {
       let row = document.querySelector(`#playerRow${num}`);
       td.textContent = user.gameBoard.squareArr[i];
       td.setAttribute('id', `${user.gameBoard.squareArr[i]}`);
+      td.setAttribute('data-num', `${i}`);
       td.setAttribute('class', 'player-square');
       row.appendChild(td);
     }
@@ -290,7 +283,6 @@ function addHitClass(user) {
   let name = user.name.toLowerCase();
   const tbody = document.getElementById(`${name}Board`);
   let hitArray = user.gameBoard.hitArr;
-  console.log(user.name + ' hit array is ' + hitArray);
   if (hitArray === []) return;
   for (i = 0; i < hitArray.length; i++) {
     let div = tbody.querySelector(`[data-num='${hitArray[i]}']`);
@@ -302,7 +294,6 @@ function addMissClass(user) {
   let name = user.name.toLowerCase();
   const tbody = document.getElementById(`${name}Board`);
   let missArray = user.gameBoard.missedArr;
-  console.log(user.name + ' miss array is ' + missArray);
   if (missArray === []) return;
   for (i = 0; i < missArray.length; i++) {
     let div = tbody.querySelector(`[data-num='${missArray[i]}']`);
@@ -339,8 +330,7 @@ document.getElementById('start').addEventListener('click', () => {
 
 *** attacking
  1 - dom listener put in gameloop func to call gameboard.receiveAttack()
-		^^ create two new css classes for hit and miss for the board divs
-		^^ update querySelector in add miss & hit class functions
+		^^ computer.randomNum() is only being called on the first turn then returning null
 
 *** game Win / Lose
 	1. add event listener from index.js that calls gameLoss(USER)

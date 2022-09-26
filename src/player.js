@@ -9,6 +9,7 @@ function Player(name, gameBoard, ships) {
       this.active = this.active ? false : true;
     },
     randomNum() {
+      console.log('Random Number called');
       let num = Math.floor(Math.random() * 100);
       if (this.attacks.includes(num) === false) {
         return num;

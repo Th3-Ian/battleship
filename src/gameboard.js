@@ -85,13 +85,13 @@ function buildBoard() {
       //let coord = this.squareArr.indexOf(location);
       //coord = coord - 1;
       const placed = this.placedShips;
-      console.log('This is coordinates ' + coord + ' this is location ');
+      console.log('This is coordinates ' + coord);
       try {
         if (this.squareArr[coord] === 'O') {
           console.log('HIT!');
           this.hitNum++;
           this.hitArr.push(coord);
-          console.log(this.hitArr);
+          //console.log(this.hitArr);
           for (let i = 0; i < placed.length; i++) {
             for (let j = 0; j < placed[i].coordinates.length; j++) {
               if (placed[j].coordinates[j] === coord) {
@@ -110,13 +110,13 @@ function buildBoard() {
         } else {
           console.log('MISS!');
           this.missedArr.push(coord);
-          console.log(`This is the board missedArr ${this.missedArr}`);
+          //console.log(`This is the board missedArr ${this.missedArr}`);
           this.squareArr.splice(coord, 1, 'X');
           indexModule.updateActvPlyr();
           indexModule.gameLoop();
         }
       } catch (err) {
-        console.log(err);
+        //console.log(err);
         modalModule.openModal('ERROR!', err);
         indexModule.gameLoop();
         return;
@@ -164,9 +164,9 @@ function buildBoard() {
           //console.log(this.squareArr);
         } catch (err) {
           //let num = user.randomLoc();
-          console.log('this is the random number horizontal ' + randNumber);
-          console.log('this ship will be called again ' + ship);
-          console.error(err);
+          //console.log('this is the random number horizontal ' + randNumber);
+          //console.log('this ship will be called again ' + ship);
+          //console.error(err);
           this.randPlace(ship, randNumber, user);
           // func to alert screen of error
           // func to place ship again in diff location
@@ -179,7 +179,6 @@ function buildBoard() {
             if (end === undefined) {
               throw new Error('Cannot place, ship is out of bounds');
             } else if (placement < 0) {
-              console.log('BUG FIXED');
               throw new Error('Error: another ship is at this location');
             } else if (this.squareArr[placement + i * 10] === 'O') {
               console.log('ANOTHER SHIP AT LOCATION ERROR CAUGHT');
