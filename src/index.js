@@ -318,19 +318,19 @@ document.getElementById('newGame').addEventListener('click', () => {
   document.reload();
 });
 
-document.getElementById('start').addEventListener('click', () => {
-  startGame();
-});
+document.getElementById('start').addEventListener(
+  'click',
+  () => {
+    startGame();
+  },
+  { once: true }
+);
 
 /*
 
 *** Set start button eventlistener to once: true
 *** placing use ship todo
  1 - dom listener to drag ship to board location. Then grabs location and ship to call gameboard place ship
-
-*** attacking
- 1 - dom listener put in gameloop func to call gameboard.receiveAttack()
-		^^ computer.randomNum() is only being called on the first turn then returning null
 
 *** game Win / Lose
 	1. add event listener from index.js that calls gameLoss(USER)
