@@ -60,7 +60,7 @@ export function gameLoop() {
     clearBoard(player);
     shipBoardDisplay(player);
     //console.log('Computer randNum ' + randNum);
-    player.gameBoard.recieveAttack(randNum);
+    player.gameBoard.recieveAttack(randNum, computer);
   }
 }
 
@@ -68,7 +68,6 @@ function makeAttack() {
   clearBoard(computer);
   shipBoardDisplay(computer);
   const squareDivs = document.querySelectorAll(`.comp-square`);
-  //alert('Make attack called');
   for (let i = 0; i < squareDivs.length; i++) {
     squareDivs[i].addEventListener('click', (e) => {
       //alert('Event Listener Called');
@@ -282,6 +281,7 @@ function addHitClass(user) {
   let name = user.name.toLowerCase();
   const tbody = document.getElementById(`${name}Board`);
   let hitArray = user.gameBoard.hitArr;
+  console.log('hit class called');
   if (hitArray === []) return;
   for (i = 0; i < hitArray.length; i++) {
     let div = tbody.querySelector(`[data-num='${hitArray[i]}']`);
@@ -293,6 +293,7 @@ function addMissClass(user) {
   let name = user.name.toLowerCase();
   const tbody = document.getElementById(`${name}Board`);
   let missArray = user.gameBoard.missedArr;
+  console.log('miss class called');
   if (missArray === []) return;
   for (i = 0; i < missArray.length; i++) {
     let div = tbody.querySelector(`[data-num='${missArray[i]}']`);
@@ -330,11 +331,7 @@ document.getElementById('start').addEventListener(
 *** placing use ship todo
  1 - dom listener to drag ship to board location. Then grabs location and ship to call gameboard place ship
 
-*** game Win / Lose
-	1. add event listener from index.js that calls gameLoss(USER)
-		check is user is computer or player and then call endGame(modalTitle)
-		if user is computer modalTitle === You win else modalText === you lose
-		both should have 'Would you like to play another game' as the body
+ *** track down t undefined type error that keeps popping up in modal on recieve attack
 
 *** add try and catch for shipBoardDisplay func to catch if NaN happens
 

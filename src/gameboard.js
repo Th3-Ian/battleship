@@ -108,6 +108,7 @@ function buildBoard() {
           indexModule.updateActvPlyr();
           this.gameLoss(user);
         } else if (this.squareArr[coord] === 'X') {
+          if (user.name === 'Computer') indexModule.gameLoop();
           throw new Error('Error: Already attacked this location');
         } else {
           console.log('MISS!');
@@ -119,8 +120,7 @@ function buildBoard() {
         }
       } catch (err) {
         console.log(err);
-        if (user.name === 'Player' && err != TypeError)
-          modalModule.openModal('ERROR!', err);
+        if (user.name === 'Player') modalModule.openModal('ERROR!', err);
         indexModule.gameLoop();
         return;
       }
