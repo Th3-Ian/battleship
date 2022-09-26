@@ -106,7 +106,7 @@ function buildBoard() {
           // then grabs the index that matches the ship.coord and splices it in ship.arr
           this.squareArr.splice(coord, 1, 'X');
           indexModule.updateActvPlyr();
-          indexModule.gameLoop();
+          this.gameLoss(user);
         } else if (this.squareArr[coord] === 'X') {
           throw new Error('Error: Already attacked this location');
         } else {
@@ -125,16 +125,24 @@ function buildBoard() {
         return;
       }
     },
-    gameLoss() {
+    gameLoss(user) {
+      let sunkShips = [];
       const placed = this.placedShips;
       for (let i = 0; i < placed.length; i++) {
-        if (placed[i].sunk === false) {
-          break;
-        } else {
-          console.log('Game over');
-          modalModule.openModal('GAME OVER', 'You lost :(');
-          return;
-        }
+        sunkShips.push(placed[i].sunk);
+      }
+      if (sunkShips.some((elm) => elm === false)) {
+        sunkShips = [];
+        indexModule.gameLoop();
+      } else if (user.name === 'Player') {
+        console.log('Game over');
+        modalModule.openModal('WINNER WINNER', 'Congratulations! You Won :)');
+        modalModule.addNewGameBtn();
+        return;
+      } else {
+        console.log('Game over');
+        modalModule.openModal('GAME OVER', 'You Lost :(');
+        modalModule.addNewGameBtn();
       }
     },
     randPlace(ship, location, user) {
