@@ -1,3 +1,5 @@
+const modalModule = require('./modal.js');
+
 function buildShip(name, length) {
   return {
     name: name,
@@ -32,7 +34,8 @@ function buildShip(name, length) {
     },
     isSunk() {
       if (!this.arr.includes('O')) {
-        console.log(`${this.name} has been sunk!`);
+        //console.log(`${this.name} has been sunk!`);
+        modalModule.openModal('Ship Sunk!', `${this.name} has been sunk!`);
         return (this.sunk = true);
       } else {
         return (this.sunk = false);

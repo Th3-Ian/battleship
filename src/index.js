@@ -49,10 +49,10 @@ function buildComputer(name) {
 export function gameLoop() {
   const randNum = player.randomNum();
   if (player.active === true) {
-    alert('player called');
+    //alert('player called');
     makeAttack();
   } else if (computer.active === true) {
-    alert('Computer called');
+    //alert('Computer called');
     clearBoard(player);
     shipBoardDisplay(player);
     //console.log('Computer randNum ' + randNum);
@@ -64,10 +64,10 @@ function makeAttack() {
   clearBoard(computer);
   shipBoardDisplay(computer);
   const squareDivs = document.querySelectorAll(`.comp-square`);
-  alert('Make attack called');
+  //alert('Make attack called');
   for (let i = 0; i < squareDivs.length; i++) {
     squareDivs[i].addEventListener('click', (e) => {
-      alert('Event Listener Called');
+      //alert('Event Listener Called');
       let sqrNum = squareDivs[i].dataset.num;
       computer.gameBoard.recieveAttack(sqrNum);
       //ship.setAttribute('class', 'hidden');
@@ -328,7 +328,6 @@ document.getElementById('start').addEventListener(
 
 /*
 
-*** Set start button eventlistener to once: true
 *** placing use ship todo
  1 - dom listener to drag ship to board location. Then grabs location and ship to call gameboard place ship
 

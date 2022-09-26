@@ -42,10 +42,10 @@ function buildBoard() {
               throw new Error('Error: another ship is at this location');
             }
 
-            this.placedShips.push(ship);
             ship.coordinates.push(placement + i);
             this.squareArr.splice(placement + i, 1, 'O');
           }
+          this.placedShips.push(ship);
           indexModule.removeEL(shipDiv);
           indexModule.resetUI(shipDiv);
         } catch (err) {
@@ -68,10 +68,10 @@ function buildBoard() {
           }
           //writes to gameboard
           for (i = 0; i < ship.length; i++) {
-            this.placedShips.push(ship);
             ship.coordinates.push(placement + i * 10);
             this.squareArr.splice(placement + i * 10, 1, 'O');
           }
+          this.placedShips.push(ship);
           indexModule.removeEL(shipDiv);
           indexModule.resetUI(shipDiv);
         } catch (err) {
@@ -85,10 +85,11 @@ function buildBoard() {
       //let coord = this.squareArr.indexOf(location);
       //coord = coord - 1;
       const placed = this.placedShips;
-      console.log('This is coordinates ' + coord);
+      //console.log('This is coordinates ' + coord);
+      console.log(placed);
       try {
         if (this.squareArr[coord] === 'O') {
-          console.log('HIT!');
+          //modalModule.openModal('Hit', "You've hit your target!");
           this.hitNum++;
           this.hitArr.push(coord);
           //console.log(this.hitArr);
@@ -96,6 +97,7 @@ function buildBoard() {
             for (let j = 0; j < placed[i].coordinates.length; j++) {
               if (placed[j].coordinates[j] === coord) {
                 placed[i].hit(j);
+                alert(placed[i].arr);
                 placed[i].isSunk();
               }
             }
@@ -155,12 +157,12 @@ function buildBoard() {
 
             //let div = document.getElementById(placement);
 
-            this.placedShips.push(ship);
             ship.coordinates.push(placement + i);
             this.squareArr.splice(placement + i, 1, 'O');
             //div.classList.add('ship');
             //console.log(ship.name + ' placed correctly');
           }
+          this.placedShips.push(ship);
           //console.log(this.squareArr);
         } catch (err) {
           //let num = user.randomLoc();
@@ -188,12 +190,12 @@ function buildBoard() {
           //writes to gameboard
           for (i = 0; i < ship.length; i++) {
             //ship.coordinates.push(this.squareArr[placement + i * 10]);
-            this.placedShips.push(ship);
             ship.coordinates.push(placement + i * 10);
             this.squareArr.splice(placement + i * 10, 1, 'O');
             //console.log(this.squareArr);
             //console.log(ship.name + ' placed correctly');
           }
+          this.placedShips.push(ship);
         } catch (err) {
           //let num = user.randomLoc();
           console.log('this is the random number verticle ' + randNumber);
