@@ -69,7 +69,7 @@ function makeAttack() {
     squareDivs[i].addEventListener('click', (e) => {
       //alert('Event Listener Called');
       let sqrNum = squareDivs[i].dataset.num;
-      computer.gameBoard.recieveAttack(sqrNum);
+      computer.gameBoard.recieveAttack(sqrNum, player);
       //ship.setAttribute('class', 'hidden');
       //call function from gameboard after successful placement to remove event listener
       //look into using clone node function to just remove the old obj

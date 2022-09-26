@@ -25,12 +25,14 @@ function buildShip(name, length) {
     },
     hit(n) {
       let num = n - 1;
+      this.arr.splice(num, 1, 'X');
+      return this.arr;
+      /*
       if (num < this.arr.length) {
-        this.arr.splice(num, 1, 'X');
-        return this.arr;
       } else {
         throw Error('Hit misses');
       }
+			*/
     },
     isSunk() {
       if (!this.arr.includes('O')) {

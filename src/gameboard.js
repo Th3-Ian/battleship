@@ -81,7 +81,7 @@ function buildBoard() {
         }
       }
     },
-    recieveAttack(coord) {
+    recieveAttack(coord, user) {
       //let coord = this.squareArr.indexOf(location);
       //coord = coord - 1;
       const placed = this.placedShips;
@@ -95,9 +95,11 @@ function buildBoard() {
           //console.log(this.hitArr);
           for (let i = 0; i < placed.length; i++) {
             for (let j = 0; j < placed[i].coordinates.length; j++) {
-              if (placed[j].coordinates[j] === coord) {
+              //console.log(placed[i].name + placed[i].coordinates + coord);
+              //console.log(typeof placed[i].coordinates[j]);
+              //console.log(typeof coord);
+              if (placed[i].coordinates[j] === parseInt(coord)) {
                 placed[i].hit(j);
-                alert(placed[i].arr);
                 placed[i].isSunk();
               }
             }
@@ -118,8 +120,8 @@ function buildBoard() {
           indexModule.gameLoop();
         }
       } catch (err) {
-        //console.log(err);
-        modalModule.openModal('ERROR!', err);
+        console.log(user.name);
+        if (user.name === 'Player') modalModule.openModal('ERROR!', err);
         indexModule.gameLoop();
         return;
       }
