@@ -87,10 +87,6 @@ function makeAttack() {
   }
 }
 
-function endGame() {
-  modalModule.openModal('Game Win', 'Would you like to start a new game?');
-}
-
 function buildFleet() {
   let fleet = [];
   for (let i = 0; i < shipTypesArr.length; i++) {
