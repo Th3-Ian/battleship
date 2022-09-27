@@ -329,8 +329,6 @@ document.getElementById('start').addEventListener(
 *** placing use ship todo
  1 - dom listener to drag ship to board location. Then grabs location and ship to call gameboard place ship
 
- *** track down t undefined type error that keeps popping up in modal on recieve attack
-
-*** add try and catch for shipBoardDisplay func to catch if NaN happens
+ *** update scss file to have 'glass like' look to game
 
 */

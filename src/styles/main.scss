@@ -1,4 +1,5 @@
-$bg: blue;
+@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Poppins:wght@400;500&display=swap');
+$bg: linear-gradient(to right top, #65dfc9, #6cdbeb);
 
 *{
 	margin: 0;
@@ -8,19 +9,68 @@ $bg: blue;
 }
 
 body {
-  background-color: $bg;
+  background: linear-gradient(to right top, #65dfc9, #6cdbeb);
+}
+
+header {
+	padding: 12px;
+	display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+	font-family: Monoton;
+	font-size: 72px;
 }
 
 div {
 	display: block;
-	background-color: wheat;
+	backdrop-filter: blur(1.5rem);
 }
 
 section {
 	display: block;
-	background-color: orange;
+	backdrop-filter: blur(1.5rem);
+	background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
 	margin: 12px;
+	border-radius: 12px;
 }
+
+button {
+  backdrop-filter: blur(1.5rem);
+  border: 2px solid #fff;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+  box-sizing: border-box;
+  color: black;
+  cursor: pointer;
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: 500;
+	opacity: 68%;
+  outline: none;
+  outline: 0;
+  padding: 10px 20px;
+  text-align: center;
+  transform: translateY(0);
+  transition: transform 150ms, box-shadow 150ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+button :hover {
+  box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+  transform: translateY(-2px);
+}
+
+@media (min-width: 768px) {
+  .button-37 {
+    padding: 10px 30px;
+  }
+}
+
 
 .main-body {
 	width: 90%;
@@ -28,6 +78,7 @@ section {
 	flex-wrap: wrap;
 	justify-content: center;
 	margin: auto;
+	backdrop-filter: blur(1.5rem);
 }
 
 section {
@@ -41,9 +92,10 @@ table {
 }
 
 td, th {
-	border: 3px solid black;
+	border: 5px solid #6cdbeb;
   width: 8.6%;
   position: relative;
+	border-radius: 5px;
 	text-align: center;
 
 }
@@ -89,15 +141,17 @@ th {
 .ship {
 	border: 3px solid purple;
 	background-color: teal;
+	color: transparent;
 	width: 3rem;
 	height: 2.5rem;
 }
 
 .ship-container {
 	display: block;
-	border: 1px darkblue solid;
+	border: 4px darkblue solid;
 	padding-right: 10px;
-	background-color: green;
+	border-radius: 24px;
+	backdrop-filter: blur(1.5rem);
 	z-index: 4;
 	height: 2.5rem;
 }
@@ -146,6 +200,8 @@ th {
 	justify-content: space-between;
 	align-items: center;
 	border-bottom: 2px solid black;
+	font-family: Monoton;
+	font-size: 32px;
 }
 
 .modal-header .title {
@@ -189,6 +245,8 @@ th {
 
 #newGame.active {
 	opacity: 1;
+	margin-left: 160px;
+  margin-top: 12px;
 }
 
 .selected {
@@ -202,9 +260,9 @@ th {
 }
 
 .hit-space {
-	background-color: green;
+	background-color: #30E36F;
 }
 
 .miss-space {
-	background-color: red;
+	background-color: #31636B;
 }
